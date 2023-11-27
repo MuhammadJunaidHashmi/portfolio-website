@@ -1,4 +1,16 @@
-<!doctype html>
+// server.js (Node.js example)
+const express = require('express');
+const app = express();
+
+// Your Google Analytics Tracking ID stored as an environment variable
+const gaTrackingId = process.env.GA_TRACKING_ID;
+//const base = "https://muhammadjunaidhashmi.vercel.app/"
+
+app.get('/', (req, res) => {
+  // Render your HTML with the dynamically inserted Google Analytics Tracking ID
+  const dynamicBasePath = determineBasePath(req);  
+const html = `
+   <!doctype html>
 <html lang="en">
 
 <head>
@@ -6,25 +18,25 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Portfolio</title>
-  <link rel="icon" type="image/svg+xml" href="./assets/img/fav.jpg" />
-  <link rel="stylesheet" href="assets/swiper-bundle.min.css" />
-  <link rel="stylesheet" href="assets/newcss.css" />
+  <link rel="icon" type="image/svg+xml" href="${dynamicBasePath}assets/img/fav.jpg" />
+      <link rel="stylesheet" href="${dynamicBasePath}assets/swiper-bundle.min.css" />
+      <link rel="stylesheet" href="${dynamicBasePath}assets/newcss.css" />
   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-PQ017T89Y8"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=${gaTrackingId}"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'G-PQ017T89Y8');
+  gtag('config', '${gaTrackingId}');
 </script>
 </head>
 
 <body oncontextmenu="return false">
   <header class="header" id="header">
     <nav class="nav container">
-      <a href="#" class="nav__logo"> <img src="assets/img/fav.jpg" style="height: 40px;" alt="" class="" /></a>
+      <a href="#" class="nav__logo"> <img src="${dynamicBasePath}assets/img/fav.jpg" style="height: 40px;" alt="" class="" /></a>
       <div class="nav__menu" id="nav-menu">
         <ul class="nav__list grid">
           <li class="nav__item">
@@ -108,7 +120,7 @@
                       165.547 130.807 187.559 100.226 186.353C69.6454 185.297 41.0228 161.023 21.7403 
                       129.362C2.45775 97.8511 -7.48481 59.1033 6.67581 34.5279C20.9871 10.1032 59.7028 
                      -0.149132 97.9666 0.00163737C136.23 0.303176 174.193 10.857 190.312 36.4879Z" />
-                <image class="home__blob-img" x="-79" y="-46" xlink:href="assets/img/profile.jpg" />
+                <image class="home__blob-img" x="-79" y="-46" xlink:href="${dynamicBasePath}assets/img/profile.jpg" />
               </g>
             </svg>
           </div>
@@ -144,7 +156,7 @@
       <span class="section__subtitle"></span>
 
       <div class="about__container container grid">
-        <img src="assets\img\about.jpg" alt="" class="about__img" />
+        <img src="${dynamicBasePath}assets/img/about.jpg" alt="" class="about__img" />
 
         <div class="about__data">
           <p class="about__description">
@@ -173,7 +185,7 @@
           </div>
 
           <div class="about__buttons">
-            <a download="" href="assets\MyCV.pdf" class="button button--flex">
+            <a download="" href="${dynamicBasePath}assets\MyCV.pdf" class="button button--flex">
               Download CV<i class="fas fa-download button__icon"></i>
             </a>
           </div>
@@ -308,7 +320,7 @@
 
       <section class="qualification__section service__section" id="qualification">
         <h2 class="section__title">Qualification</h2>
-        <span class="section__subtitle">My personal journey</span>
+      <!   <span class="section__subtitle">My personal journey</span>-->
 
         <div class="qualification__container container grid services__container">
           <div class="qualification__tabs">
@@ -471,7 +483,7 @@
 
       <section class="services section" id="services">
         <h2 class="section__title">Services</h2>
-        <span class="section__subtitle">Our Services</span>
+      <!   <span class="section__subtitle">Our Services</span>-->
 
         <div class="services-content">
           <div class="services-box">
@@ -630,13 +642,13 @@
       <!--=================== Portfolio ===================-->
       <section class="portfolio section" id="portfolio">
         <h2 class="section__title">Projects</h2>
-        <span class="section__subtitle">Most recent work</span>
+        <! <span class="section__subtitle">Most recent work</span>-->
 
         <div class="portfolio__container container swiper-container">
           <div class="swiper-wrapper">
             <!-- ------------------------portfollio 1-------------------- -->
             <div class="portfolio__content grid swiper-slide">
-              <img src="assets/img/portfolio1.png" class="portfolio__img" />
+              <img src="${dynamicBasePath}assets/img/portfolio1.png" class="portfolio__img" />
 
               <div class="portfolio__data">
                 <h3 class="portfolio__title">
@@ -663,7 +675,7 @@
 
             <!-- ------------------------portfollio 2-------------------- -->
             <div class="portfolio__content grid swiper-slide">
-              <img src="assets/img/portfolio2.png" class="portfolio__img" />
+              <img src="${dynamicBasePath}assets/img/portfolio2.png" class="portfolio__img" />
 
               <div class="portfolio__data">
                 <h3 class="portfolio__title">Researcher Personal Website</h3>
@@ -684,7 +696,7 @@
             </div>
             <!-- ------------------------portfollio 3-------------------- -->
             <div class="portfolio__content grid swiper-slide">
-              <img src="assets/img/portfolio3.png" class="portfolio__img" />
+              <img src="${dynamicBasePath}assets/img/portfolio3.png" class="portfolio__img" />
 
               <div class="portfolio__data">
                 <h3 class="portfolio__title">Personality Test App</h3>
@@ -711,7 +723,7 @@
 
             <!-- ------------------------portfollio 4-------------------- -->
             <div class="portfolio__content grid swiper-slide">
-              <img src="assets/img/portfolio4.png" class="portfolio__img" />
+              <img src="${dynamicBasePath}assets/img/portfolio4.png" class="portfolio__img" />
 
               <div class="portfolio__data">
                 <h3 class="portfolio__title">Portfolio website</h3>
@@ -852,9 +864,25 @@
     <i class="uil uil-arrow-up scrollup__icon"></i>
   </a>
 
-  <script type="text/javascript" src="assets/swiper-bundle.min.js"></script>
+  <script type="text/javascript" src="${dynamicBasePath}assets/swiper-bundle.min.js"></script>
 
-  <script src="assets/ptj.js"></script>
+  <script src="${dynamicBasePath}assets/ptj.js"></script>
 </body>
 
 </html>
+  `;
+
+  res.send(html);
+});
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
+
+function determineBasePath(req) {
+  // Your logic to determine the base path dynamically based on the request
+  // For example, you might check if the request is coming from a specific domain or path.
+  // Return the determined base path as a string.
+  return "https://muhammadjunaidhashmi.vercel.app/";
+}
